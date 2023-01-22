@@ -1,0 +1,35 @@
+@use "../abstracts/variables";
+
+.current-weather {
+  width: min-content;
+  margin-left: 2rem;
+  display: flex;
+  align-items: center;
+  line-height: 1.2;
+  gap: 1rem;
+
+  &__temperature {
+    font-size: 10rem;
+  }
+
+  &__info-box {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    &__city {
+      font-size: 5rem;
+    }
+
+    &__date {
+      font-size: 1.6rem;
+    }
+  }
+
+  &__icon-box {
+    height: 100%;
+    width: 8rem;
+    padding-left: 1rem;
+    display: flex;
+    align-items: center;
+  }
+}
