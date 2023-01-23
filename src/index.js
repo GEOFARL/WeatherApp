@@ -5,6 +5,33 @@ import { extractDataNow, extractDataForecast } from './modules/extractData';
 const searchInput = document.querySelector('.find-region__input');
 const errorMessage = document.querySelector('.find-region__error-message');
 
+function loadWeatherDetails({
+  cloudiness,
+  feelsLike,
+  humidity,
+  pressure,
+  sunrise,
+  sunset,
+  windSpeed,
+}) {
+  const [
+    cloudyEl,
+    feelsLikeEl,
+    humidityEl,
+    pressureEl,
+    sunriseEl,
+    sunsetEl,
+    windSpeedEl,
+  ] = [...document.querySelectorAll('.weather-details__row__data')];
+  cloudyEl.innerHTML = `${cloudiness}%`;
+  feelsLikeEl.innerHTML = `${feelsLike}&deg;C`;
+  humidityEl.innerHTML = `${humidity}%`;
+  pressureEl.innerHTML = `${pressure} Pa`;
+  sunriseEl.innerHTML = `${sunrise}`;
+  sunsetEl.innerHTML = `${sunset}`;
+  windSpeedEl.innerHTML = `${windSpeed} m/s`;
+}
+
 function loadCurrentWeather(data) {
   const currentTemp = document.querySelector('.current-weather__temperature');
   const currentCity = document.querySelector('.current-weather__info-box__city');
@@ -53,8 +80,10 @@ async function loadWebsite(location) {
     const response = await retrieveWeatherData(location);
     loadCurrentWeather(response.today);
     loadForecastToday(response.forecast);
+    loadWeatherDetails(response.today);
     return true;
   } catch (err) {
+    console.log(err);
     return false;
   }
 }

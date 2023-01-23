@@ -22,10 +22,11 @@
 
 .aside {
   width: 45rem;
-  padding: 5rem;
+  padding: 5rem 8rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 7rem;
   height: 100%;
   background-color: rgba(variables.$color-white, .4);
   backdrop-filter: blur(1rem);
