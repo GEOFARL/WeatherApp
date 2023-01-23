@@ -15,13 +15,13 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    white-space: nowrap;
     &__city {
       font-size: 5rem;
     }
 
     &__date {
       font-size: 1.6rem;
-      white-space: nowrap;
     }
   }
 

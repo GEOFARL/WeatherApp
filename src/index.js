@@ -2,6 +2,9 @@ import './template.html';
 import './sass/main.scss';
 import { extractDataNow, extractDataForecast } from './modules/extractData';
 
+const searchInput = document.querySelector('.find-region__input');
+const errorMessage = document.querySelector('.find-region__error-message');
+
 function loadCurrentWeather(data) {
   const currentTemp = document.querySelector('.current-weather__temperature');
   const currentCity = document.querySelector('.current-weather__info-box__city');
@@ -29,27 +32,58 @@ function loadForecastToday(forecast) {
 }
 
 async function retrieveWeatherData(location) {
+  const [responseForecast, responseToday] = await Promise.all([
+    fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${location}&units=metric&appid=7e04eae5282a183a5918c0d10f2829de`),
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=7e04eae5282a183a5918c0d10f2829de`),
+  ]);
+  const [jsonF, jsonN] = await Promise.all([
+    responseForecast.json(),
+    responseToday.json(),
+  ]);
+  const today = extractDataNow(jsonN);
+  const forecast = extractDataForecast(jsonF);
+  return {
+    today,
+    forecast,
+  };
+}
+
+async function loadWebsite(location) {
   try {
-    const [responseForecast, responseToday] = await Promise.all([
-      fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${location}&units=metric&appid=7e04eae5282a183a5918c0d10f2829de`),
-      fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=7e04eae5282a183a5918c0d10f2829de`),
-    ]);
-    const [jsonF, jsonN] = await Promise.all([
-      responseForecast.json(),
-      responseToday.json(),
-    ]);
-    const today = extractDataNow(jsonN);
-    const forecast = extractDataForecast(jsonF);
-
-    loadCurrentWeather(today);
-    loadForecastToday(forecast);
-
-    console.log(today);
-    console.log(forecast);
-    document.querySelector('img').src = today.icon;
+    const response = await retrieveWeatherData(location);
+    loadCurrentWeather(response.today);
+    loadForecastToday(response.forecast);
+    return true;
   } catch (err) {
-    console.log(err);
+    return false;
   }
 }
 
-retrieveWeatherData('California');
+function handleErrorMessage(isLoaded) {
+  if (!isLoaded) {
+    if (!searchInput.classList.contains('find-region__input--invalid')) {
+      searchInput.classList.add('find-region__input--invalid');
+    }
+    if (errorMessage.classList.contains('find-region__error-message--hidden')) {
+      errorMessage.classList.remove('find-region__error-message--hidden');
+    }
+  } else if (searchInput.classList.contains('find-region__input--invalid')
+    && !errorMessage.classList.contains('find-region__error-message--hidden')) {
+    searchInput.classList.remove('find-region__input--invalid');
+    errorMessage.classList.add('find-region__error-message--hidden');
+  }
+}
+
+searchInput.addEventListener('keydown', async (e) => {
+  if (e.key === 'Enter') {
+    const isLoaded = await loadWebsite(searchInput.value);
+    handleErrorMessage(isLoaded);
+  }
+});
+
+searchInput.addEventListener('blur', async () => {
+  const isLoaded = await loadWebsite(searchInput.value);
+  handleErrorMessage(isLoaded);
+});
+
+loadWebsite('Kyiv');

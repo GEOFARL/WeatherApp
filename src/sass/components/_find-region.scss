@@ -1,0 +1,70 @@
+@use "../abstracts/variables";
+
+.find-region {
+  width: 30rem;
+  position: relative;
+  background-image: url(../assets/images/search-icon.svg);
+  background-repeat: no-repeat;
+  background-position: top 50% right 3px;
+  background-size: 1.8rem;
+
+  &__input {
+    width: 100%;
+    padding: .5rem 3rem .5rem 0;
+    background-color: transparent;
+    font-family: inherit;
+    border: none;
+    border-bottom: 2px solid variables.$color-white;
+    font-size: 1.6rem;
+    color: variables.$color-grey-blue;
+    transition: all .3s;
+
+    &--invalid {
+      & ~ .find-region__label {
+        color: variables.$color-red;
+      }
+
+      border-bottom: 2px solid variables.$color-red;
+    }
+
+    &::placeholder {
+      color: transparent;
+    }
+
+    &:placeholder-shown ~ .find-region__label {
+      top: 2px;
+      left: 0;
+      font-size: 1.8rem;
+    }
+
+    &:focus {
+      outline: none;
+      border-width: 3px;
+      font-weight: 700;
+
+      & ~ .find-region__label {
+        font-size: 1.4rem;
+        font-weight: 700;
+        top: -1.6rem;
+      }
+    }
+  }
+
+  &__label {
+    transition: all .3s;
+    position: absolute;
+    top: -1.6rem;
+    left: 0;
+    font-size: 1.4rem;
+  }
+
+  &__error-message {
+    position: absolute;
+    font-size: 1.1rem;
+    color: variables.$color-red;
+
+    &--hidden {
+      display: none;
+    }
+  }
+}
