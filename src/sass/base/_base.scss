@@ -11,3 +11,63 @@
 body {
   box-sizing: border-box;
 }
+
+@media screen and (min-width: 2200px) {
+  :root {
+    font-size: 100% !important;
+  }
+}
+
+@media screen and (min-width: 2000px) {
+  :root {
+    font-size: 90% !important;
+  }
+}
+
+@media screen and (min-width: 1800px) {
+  :root {
+    font-size: 82.5% !important;
+  }
+}
+
+@media screen and (max-width: 1380px) {
+  :root {
+    font-size: 82.5%;
+  }
+}
+
+@media screen and (max-width: 1210px) {
+  :root {
+    font-size: 70%;
+  }
+}
+
+@media screen and (max-width: 1020px) {
+  :root {
+    font-size: 60%;
+  }
+}
+
+@media screen and (max-width: 890px) {
+  :root {
+    font-size: 50%;
+  }
+}
+
+@media screen and (max-width: 740px) {
+  :root {
+    font-size: 40%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  :root {
+    font-size: 30%;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  :root {
+    font-size: 25%;
+  }
+}
