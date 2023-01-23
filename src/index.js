@@ -5,6 +5,21 @@ import { extractDataNow, extractDataForecast } from './modules/extractData';
 const searchInput = document.querySelector('.find-region__input');
 const errorMessage = document.querySelector('.find-region__error-message');
 
+function loadForecastWeek(forecast) {
+  const forecastDays = [...document.querySelectorAll('.week-forecast__row')];
+  forecastDays.forEach((day, index) => {
+    const dayEl = day.querySelector('.week-forecast__row__day');
+    const img = day.querySelector('.week-forecast__row__icon');
+    const minTempEl = day.querySelector('.week-forecast__row__mintemp');
+    const maxTempEl = day.querySelector('.week-forecast__row__maxtemp');
+    console.log(forecast);
+    dayEl.innerHTML = forecast[index].dayOfWeek;
+    img.src = forecast[index].icon;
+    minTempEl.innerHTML = `${forecast[index].minTemp}&deg;`;
+    maxTempEl.innerHTML = `${forecast[index].maxTemp}&deg;`;
+  });
+}
+
 function loadWeatherDetails({
   cloudiness,
   feelsLike,
@@ -81,6 +96,7 @@ async function loadWebsite(location) {
     loadCurrentWeather(response.today);
     loadForecastToday(response.forecast);
     loadWeatherDetails(response.today);
+    loadForecastWeek(response.forecast.forecast);
     return true;
   } catch (err) {
     console.log(err);
