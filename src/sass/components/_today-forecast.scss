@@ -1,0 +1,65 @@
+@use "../abstracts/variables";
+
+.today-forecast {
+  display: flex;
+  flex-direction: column;
+  width: min-content;
+  gap: 1.5rem;
+  border: 2px solid variables.$color-white;
+  padding: 2rem;
+  border-radius: 2rem;
+  box-shadow: 0 1.5rem 4rem rgba(variables.$color-black, .2);
+
+  .heading-tertiary {
+    white-space: nowrap;
+    width: min-content;
+    user-select: none;
+    &:hover {
+      text-shadow: .5rem 1rem 3rem rgba(variables.$color-black, .8);
+    }
+  }
+
+  &__container {
+    width: 100%;
+    display: flex;
+  }
+
+  &__delimiter {
+    height: 100%;
+    width: 1.5px;
+    background-color: variables.$color-white;
+  }
+
+  &__card {
+    transition: all .3s;
+    & > * {
+      white-space: nowrap;
+    }
+    text-align: center;
+    display: inline-block;
+    $gap: 2rem;
+
+    &__icon-box {
+      height: 8rem;
+      display: grid;
+      place-content: center;
+    }
+
+    &__icon {
+      margin: 0 auto;
+      width: 80%;
+    }
+
+    &:not(:last-child) {
+      padding-right: $gap;
+    }
+
+    &:not(:first-child) {
+      padding-left: $gap;
+    }
+  }
+
+  &__card:hover {
+    transform: translateY(-1rem);
+  }
+}
